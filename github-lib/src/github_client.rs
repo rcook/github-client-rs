@@ -7,10 +7,11 @@ use futures_util::future::try_join_all;
 use log::debug;
 use reqwest::header::{ACCEPT, USER_AGENT};
 use reqwest::{Client, IntoUrl, Url};
+use reqwest_middleware::{ClientBuilder, ClientWithMiddleware};
 use serde::de::DeserializeOwned;
 
 pub struct GitHubClient {
-    client: Client,
+    client: ClientWithMiddleware,
     url: Url,
     token: String,
 }
@@ -20,7 +21,7 @@ impl GitHubClient {
     where
         U: IntoUrl,
     {
-        let client = Client::new();
+        let client = ClientBuilder::new(Client::new()).build();
         Ok(Self {
             client,
             url: url
@@ -48,7 +49,7 @@ impl GitHubClient {
         T: DeserializeOwned + Send + 'static,
     {
         async fn get_items<T>(
-            client: &Client,
+            client: &ClientWithMiddleware,
             token: &str,
             url: &Url,
             page_number: Option<usize>,
