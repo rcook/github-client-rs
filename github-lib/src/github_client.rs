@@ -4,6 +4,7 @@ use crate::object_model::Repo;
 use crate::result::GitHubClientResult;
 use anyhow::anyhow;
 use futures_util::future::try_join_all;
+use log::debug;
 use reqwest::header::{ACCEPT, USER_AGENT};
 use reqwest::{Client, IntoUrl, Url};
 use serde::de::DeserializeOwned;
@@ -30,6 +31,7 @@ impl GitHubClient {
     }
 
     pub async fn get_user_repos(&self) -> GitHubClientResult<Vec<Repo>> {
+        debug!("get_user_repos");
         let mut repos = self
             .get_paged::<Repo>(
                 self.url
@@ -54,6 +56,7 @@ impl GitHubClient {
         where
             T: DeserializeOwned,
         {
+            debug!("get_items(page_number={:?})", page_number);
             let mut request_builder = client.get(url.clone());
             if let Some(x) = page_number {
                 request_builder = request_builder.query(&[("page", x)]);
@@ -69,6 +72,8 @@ impl GitHubClient {
                 .map_err(|e| GitHubClientError::Other(anyhow!(e)))?
                 .error_for_status()
                 .map_err(|e| GitHubClientError::Other(anyhow!(e)))?;
+
+            debug!("get_items(page_number={:?}) returned", page_number);
 
             let link_urls = LinkUrls::from_response(&response)?;
 

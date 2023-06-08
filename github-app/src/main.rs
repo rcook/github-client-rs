@@ -8,6 +8,8 @@ use github_lib::GitHubClient;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    env_logger::init();
+
     let args = Args::parse();
 
     let github = GitHubClient::new("https://api.github.com/", &args.github_token)?;
