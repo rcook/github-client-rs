@@ -29,7 +29,7 @@ impl GitHubClient {
         })
     }
 
-    pub async fn list_repos(&self) -> GitHubClientResult<Vec<Repo>> {
+    pub async fn get_user_repos(&self) -> GitHubClientResult<Vec<Repo>> {
         let mut repos = self
             .get_paged::<Repo>(
                 self.url

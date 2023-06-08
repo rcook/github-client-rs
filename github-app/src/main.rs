@@ -12,7 +12,7 @@ async fn main() -> Result<()> {
 
     let github = GitHubClient::new("https://api.github.com/", &args.github_token)?;
 
-    let repos = github.list_repos().await?;
+    let repos = github.get_user_repos().await?;
     let public_repos = repos.iter().filter(|x| !x.private).collect::<Vec<_>>();
 
     for repo in &public_repos {
