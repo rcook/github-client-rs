@@ -13,17 +13,18 @@ async fn main() -> Result<()> {
     let github = GitHubClient::new("https://api.github.com/", &args.github_token)?;
 
     let repos = github.list_repos().await?;
-    for repo in &repos {
+    let public_repos = repos.iter().filter(|x| !x.private).collect::<Vec<_>>();
+
+    for repo in &public_repos {
         println!(
-            "{} ({}) [{}] [private: {}]",
+            "{} ({}) [{}]",
             repo.full_name.yellow(),
             repo.id,
             repo.html_url,
-            repo.private
         );
     }
 
-    println!("({} repos)", repos.len());
+    println!("({} repos)", public_repos.len());
 
     Ok(())
 }
