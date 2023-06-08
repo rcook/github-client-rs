@@ -82,8 +82,7 @@ impl GitHubClient {
         }
 
         fn get_page_number(url: &Url) -> GitHubClientResult<usize> {
-            url
-                .query_pairs()
+            url.query_pairs()
                 .find(|(n, _)| n == "page")
                 .ok_or_else(|| anyhow!("page missing from query string"))?
                 .1
