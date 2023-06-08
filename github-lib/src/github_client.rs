@@ -9,6 +9,7 @@ use reqwest::{Client, IntoUrl, Url};
 use serde::de::DeserializeOwned;
 
 pub struct GitHubClient {
+    client: Client,
     url: Url,
     token: String,
 }
@@ -18,7 +19,9 @@ impl GitHubClient {
     where
         U: IntoUrl,
     {
+        let client = Client::new();
         Ok(Self {
+            client,
             url: url
                 .into_url()
                 .map_err(|e| GitHubClientError::Other(anyhow!(e)))?,
@@ -88,10 +91,9 @@ impl GitHubClient {
                 .map_err(|e| GitHubClientError::Other(anyhow!(e)))?)
         }
 
-        let client = Client::new();
         let mut all_items = Vec::new();
 
-        let (items, link_urls) = get_items::<T>(&client, &self.token, &url, None).await?;
+        let (items, link_urls) = get_items::<T>(&self.client, &self.token, &url, None).await?;
         all_items.extend(items);
 
         let Some(link_urls) = link_urls else {
@@ -102,7 +104,7 @@ impl GitHubClient {
         let last_page_number = get_page_number(&link_urls.last_url)?;
         for (items, _) in try_join_all(
             (next_page_number..=last_page_number)
-                .map(|i| get_items::<T>(&client, &self.token, &url, Some(i))),
+                .map(|i| get_items::<T>(&self.client, &self.token, &url, Some(i))),
         )
         .await?
         {
