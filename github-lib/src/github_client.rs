@@ -82,13 +82,13 @@ impl GitHubClient {
         }
 
         fn get_page_number(url: &Url) -> GitHubClientResult<usize> {
-            Ok(url
+            url
                 .query_pairs()
                 .find(|(n, _)| n == "page")
                 .ok_or_else(|| anyhow!("page missing from query string"))?
                 .1
                 .parse::<usize>()
-                .map_err(|e| GitHubClientError::Other(anyhow!(e)))?)
+                .map_err(|e| GitHubClientError::Other(anyhow!(e)))
         }
 
         let mut all_items = Vec::new();
