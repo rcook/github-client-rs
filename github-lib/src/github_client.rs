@@ -2,9 +2,11 @@ use crate::error::GitHubClientError;
 use crate::link_urls::LinkUrls;
 use crate::object_model::Repo;
 use crate::result::GitHubClientResult;
+use crate::LoggingMiddleware;
 use anyhow::anyhow;
 use futures_util::future::try_join_all;
 use log::debug;
+use log::Level;
 use reqwest::header::{ACCEPT, USER_AGENT};
 use reqwest::{Client, IntoUrl, Url};
 use reqwest_middleware::{ClientBuilder, ClientWithMiddleware};
@@ -21,7 +23,9 @@ impl GitHubClient {
     where
         U: IntoUrl,
     {
-        let client = ClientBuilder::new(Client::new()).build();
+        let client = ClientBuilder::new(Client::new())
+            .with(LoggingMiddleware::new(Level::Info))
+            .build();
         Ok(Self {
             client,
             url: url

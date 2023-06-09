@@ -395,11 +395,13 @@ name = "github-lib"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "async-trait",
  "futures-util",
  "log",
  "reqwest",
  "reqwest-middleware",
  "serde",
+ "task-local-extensions",
  "thiserror",
 ]
 
