@@ -28,7 +28,8 @@ async fn main() -> Result<()> {
 
     for repo in &filtered_repos {
         println!(
-            "{} ({}) [{}]",
+            "{}: {} ({}) [{}]",
+            repo.html_url.bright_yellow(),
             repo.full_name.yellow(),
             repo.id,
             repo.html_url
