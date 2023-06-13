@@ -19,10 +19,11 @@ async fn main() -> Result<()> {
 
     for repo in &public_repos {
         println!(
-            "{} ({}) [{}]",
+            "{} ({}) [{}] archived={}",
             repo.full_name.yellow(),
             repo.id,
             repo.html_url,
+            repo.archived
         );
     }
 

@@ -20,4 +20,7 @@ pub struct Repo {
 
     #[serde(rename = "owner")]
     pub owner: Owner,
+
+    #[serde(rename = "archived")]
+    pub archived: bool,
 }
