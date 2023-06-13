@@ -15,6 +15,12 @@ async fn main() -> Result<()> {
     let github = GitHubClient::new("https://api.github.com/", &args.github_token)?;
 
     let repos = github.get_user_repos().await?;
+
+    println!(
+        "Filters: private={}, archived={}",
+        args.private, args.archived
+    );
+
     let filtered_repos = repos
         .iter()
         .filter(|x| x.private == args.private && x.archived == args.archived)
