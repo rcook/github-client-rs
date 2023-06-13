@@ -15,19 +15,21 @@ async fn main() -> Result<()> {
     let github = GitHubClient::new("https://api.github.com/", &args.github_token)?;
 
     let repos = github.get_user_repos().await?;
-    let public_repos = repos.iter().filter(|x| !x.private).collect::<Vec<_>>();
+    let filtered_repos = repos
+        .iter()
+        .filter(|x| x.private == args.private && x.archived == args.archived)
+        .collect::<Vec<_>>();
 
-    for repo in &public_repos {
+    for repo in &filtered_repos {
         println!(
-            "{} ({}) [{}] archived={}",
+            "{} ({}) [{}]",
             repo.full_name.yellow(),
             repo.id,
-            repo.html_url,
-            repo.archived
+            repo.html_url
         );
     }
 
-    println!("({} repos)", public_repos.len());
+    println!("({} repos)", filtered_repos.len());
 
     Ok(())
 }
