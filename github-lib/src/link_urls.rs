@@ -13,7 +13,7 @@ pub(crate) struct LinkUrls {
 impl LinkUrls {
     pub(crate) fn from_response(response: &Response) -> GitHubClientResult<Option<LinkUrls>> {
         let Some(link_header) = response.headers().get("link") else {
-            return Ok(None)
+            return Ok(None);
         };
 
         let links = Self::parse_link_header(
@@ -23,11 +23,11 @@ impl LinkUrls {
         );
 
         let Some(next_url) = Self::get_link_url(&links, "next")? else {
-            return Ok(None)
+            return Ok(None);
         };
 
         let Some(last_url) = Self::get_link_url(&links, "last")? else {
-            return Ok(None)
+            return Ok(None);
         };
 
         Ok(Some(LinkUrls { next_url, last_url }))
@@ -58,7 +58,7 @@ impl LinkUrls {
 
     fn get_link_url(links: &HashMap<String, String>, k: &str) -> GitHubClientResult<Option<Url>> {
         let Some(s) = links.get(k) else {
-            return Ok(None)
+            return Ok(None);
         };
 
         Ok(Some(

@@ -106,7 +106,7 @@ impl GitHubClient {
         all_items.extend(items);
 
         let Some(link_urls) = link_urls else {
-            return Ok(all_items)
+            return Ok(all_items);
         };
 
         let next_page_number = get_page_number(&link_urls.next_url)?;
