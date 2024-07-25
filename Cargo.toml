@@ -3,3 +3,4 @@ members = [
   "github-app",
   "github-lib",
 ]
+resolver = "2"
