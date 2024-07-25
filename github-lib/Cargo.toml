@@ -4,12 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = { version = "1.0.71", features = ["backtrace"] }
-async-trait = "0.1.68"
-futures-util = "0.3.28"
-log = "0.4.18"
-reqwest = { version = "0.11.18", features = ["serde_json", "json"] }
-reqwest-middleware = "0.2.2"
-serde = { version = "1.0.163", features = ["derive"] }
-task-local-extensions = "0.1.4"
-thiserror = "1.0.40"
+anyhow = { version = "1.0.86", features = ["backtrace"] }
+async-trait = "0.1.81"
+futures-util = "0.3.30"
+http = "1.1.0"
+log = "0.4.22"
+reqwest = { version = "0.12.5", features = ["json"] }
+reqwest-middleware = "0.3.2"
+serde = { version = "1.0.204", features = ["derive"] }
+thiserror = "1.0.63"

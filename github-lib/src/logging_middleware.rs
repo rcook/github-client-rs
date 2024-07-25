@@ -1,7 +1,7 @@
+use http::Extensions;
 use log::{log, Level};
 use reqwest::{Request, Response};
 use reqwest_middleware::{Middleware, Next, Result};
-use task_local_extensions::Extensions;
 
 pub struct LoggingMiddleware {
     level: Level,
