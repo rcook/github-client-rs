@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = { version = "1.0.86", features = ["backtrace"] }
-clap = { version = "4.5.11", features = ["derive", "env"] }
-colored = "2.1.0"
+anyhow = { version = "1.0.94", features = ["backtrace"] }
+clap = { version = "4.5.23", features = ["derive", "env"] }
+colored = "2.2.0"
 env_logger = "0.11.5"
 github-lib = { path = "../github-lib" }
-tokio = { version = "1.39.1", features = ["full"] }
+tokio = { version = "1.42.0", features = ["full"] }
